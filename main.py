@@ -667,15 +667,12 @@ def main():
 
             if DUAL_TRANSPORT:
                 payloads.extend([
-                    f"vless://{uuid_str}@{sni}:443?type=ws&encryption=none&security=tls&path={encoded_path}&host={tunnel_host_info}&sni={tunnel_host_info}#{encoded_remark}%20WS%20TLS",
-                    f"vless://{uuid_str}@{sni}:80?type=ws&encryption=none&security=&path={encoded_path}&host={tunnel_host_info}#{encoded_remark}%20WS%20No%20TLS",
-                    f"vless://{uuid_str}@{sni}:443?type=xhttp&encryption=none&security=tls&path={encoded_path}&host={tunnel_host_info}&sni={tunnel_host_info}&mode={XHTTP_MODE}&alpn=h3%2Ch2#{encoded_remark}%20XHTTP%20TLS",
-                    f"vless://{uuid_str}@{sni}:80?type=xhttp&encryption=none&security=&path={encoded_path}&host={tunnel_host_info}&mode={XHTTP_MODE}#{encoded_remark}%20XHTTP%20No%20TLS",
+                    f"vless://{uuid_str}@{sni}:443?type=ws&encryption=none&security=tls&path={encoded_path}&host={tunnel_host_info}&sni={tunnel_host_info}#{encoded_remark}%20WS",
+                    f"vless://{uuid_str}@{sni}:443?type=xhttp&encryption=none&security=tls&path={encoded_path}&host={tunnel_host_info}&sni={tunnel_host_info}&mode={XHTTP_MODE}&alpn=h3%2Ch2#{encoded_remark}%20XHTTP",
                 ])
             else:
                 payloads.extend([
-                    f"vless://{uuid_str}@{sni}:443?type={net_type}&encryption=none&security=tls&path={encoded_path}&host={tunnel_host_info}&sni={tunnel_host_info}{mode_param}{alpn_param_tls}#{encoded_remark}%20TLS",
-                    f"vless://{uuid_str}@{sni}:80?type={net_type}&encryption=none&security=&path={encoded_path}&host={tunnel_host_info}{mode_param}#{encoded_remark}%20NO%20TLS"
+                    f"vless://{uuid_str}@{sni}:443?type={net_type}&encryption=none&security=tls&path={encoded_path}&host={tunnel_host_info}&sni={tunnel_host_info}{mode_param}{alpn_param_tls}#{encoded_remark}",
                 ])
 
         with open("frp_info.config", "w", encoding='utf-8') as f:
