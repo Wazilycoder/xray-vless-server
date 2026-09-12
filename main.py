@@ -29,7 +29,7 @@ def main():
         "PORT": "127.0.0.1:8888",
         "PASSWORD": "123",
         "XRAY_UUID": str(uuid.uuid4()),
-        "FAKE_SNI": "api24-normal-alisg.tiktokv.com,vnpt.theworkpc.com",
+        "FAKE_SNI": "172.66.1.232#Tiktok,172.67.168.158#VinaMoney",
         "WS_PATH": "/tiktok4g",
         "WS_HOST": "trycloudflare.com",
         "TRANSPORT": "websocket,xhttp",
