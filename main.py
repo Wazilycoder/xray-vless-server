@@ -17,6 +17,9 @@ import requests
 import importlib
 import socket
 
+# Đảm bảo thư mục làm việc luôn là thư mục chứa script
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
 xray_downloader = importlib.import_module("download-xray")
 cloudflared_downloader = importlib.import_module("download-cloudflared")
 wgcf_downloader = importlib.import_module("download-wgcf")
