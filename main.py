@@ -33,7 +33,7 @@ def main():
         "WS_PATH": "/tiktok4g",
         "WS_HOST": "trycloudflare.com",
         "TRANSPORT": "websocket,xhttp",
-        "XHTTP_MODE": "packet-up",
+        "XHTTP_MODE": "auto",
         "ENABLE_WARP": "false",
         "WEBHOOK_URL": "",
         "DEBUG_MODE": "false",
@@ -149,9 +149,9 @@ def main():
     # "packet-up" is the most CDN-compatible mode and is recommended when
     # routing traffic through Cloudflare (matches how the worker/tunnel forwards plain HTTP).
     XHTTP_MODE = get_os_env("XHTTP_MODE").strip().lower()
-    if XHTTP_MODE not in ("packet-up", "stream-up", "stream-one"):
-        print(f"[!] Unknown XHTTP_MODE '{XHTTP_MODE}', falling back to 'packet-up'.")
-        XHTTP_MODE = "packet-up"
+    if XHTTP_MODE not in ("packet-up", "stream-up", "stream-one", "auto"):
+        print(f"[!] Unknown XHTTP_MODE '{XHTTP_MODE}', falling back to 'auto'.")
+        XHTTP_MODE = "auto"
 
     # Parse multi-port configuration
     # Supported formats: "8888" (defaults to 0.0.0.0), "127.0.0.1:8888",
