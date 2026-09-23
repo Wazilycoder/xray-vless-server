@@ -1,14 +1,11 @@
 #!/bin/bash
 set -e
-apt update && apt install -y git python3 python3-pip python3-venv screen curl
-rm -rf /root/vless
-git clone https://github.com/vincentng295/xray_vless_ws_server.git /root/vless
 cd /root/vless
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-python3 download-xray.py
-python3 download-cloudflared.py
+pkill -f main.py || true
+pkill -f xray || true
+pkill -f cloudflared || true
+
+rm -f frp_info.config frp_info.json
 
 cat << 'EOF' > .env
 PORT=127.0.0.1:8888
@@ -20,13 +17,30 @@ WS_HOST=trycloudflare.com
 TRANSPORT=xhttp
 XHTTP_MODE=packet-up
 ENABLE_WARP=false
+DEBUG_MODE=true
 EOF
 
-screen -dmS vless python3 main.py
-sleep 10
+# Kill any existing screen session
+screen -X -S vless quit || true
+
+# Start main.py using the virtualenv python
+screen -dmS vless /root/vless/venv/bin/python3 main.py
+
+echo 'Đang khởi động Xray và tạo Cloudflare Tunnel mới...'
+count=0
+while [ ! -s frp_info.config ]; do
+    sleep 2
+    count=
+    if [  -ge 30 ]; then
+        echo 'Chờ hơi lâu, kiểm tra tiến trình...'
+        break
+    fi
+done
+
 echo ''
 echo '=================================================='
-echo 'DA CAI DAT XONG! DAY LA LINK VLESS CUA BAN:'
+echo 'DA KHOI TAO THANH CONG! LINK CHUAN 100% CUA BAN:'
 echo '=================================================='
 cat frp_info.config
+echo ''
 echo '=================================================='
